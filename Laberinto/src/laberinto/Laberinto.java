@@ -16,7 +16,8 @@ public class Laberinto {
      */
     public static void main(String[] args) {
         CrearLaberinto cl = new CrearLaberinto();
-        cl.dibujarLaberinto(5,5,10);
+        //envio las dimensiones de la matriz y el numero de obstaculos
+        cl.dibujarLaberinto(6,6,25);
     }
     
 }

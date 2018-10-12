@@ -9,48 +9,90 @@ package laberinto;
  * @author KLEBER PUCHA
  */
 public class CrearLaberinto {
-    public int xfijo=0;
-    public int yfijo=0;
     void dibujarLaberinto(int x, int y, int o) {
-        
+        //declaracion de variables a utilizar
         int ix = 0, iy = 0, fx = 0, fy = 0;
-        char matriz[][] = new char[x][y];       
+        //la matriz sera de tipo char
+        char matriz[][] = new char[x][y];
+        //for que en este momento se creara con puntos completamente que son espacios
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 matriz[i][j] = '.';
             }
         }
+        //declaro un contador cont  
+        //que sera usado para controlar la cantidad de obstaculos a ingresar
         int cont = 0;
+        //condicion do que ira asiganado los obstaculos de forma aleatoria
+        //y lo hara hasta que cont sea igual a o que es el numero de obstaculos
         do {
             int ubiob1 = (int) (Math.random() * x);
             int ubiob2 = (int) (Math.random() * y);
             matriz[ubiob1][ubiob2] = '*';
             cont++;
         } while (cont < o);
+        //declaramos un contador cont2
+        //que sera usado para controlar el ingreso de I y F
         int cont2 = 0;
+        //condicion do que lo hara hasta que cont2 sea igual a 2
+        //dentro de este contara con condiciones if que asiganaran a I y F
         do {
             cont2++;
+            //si cont2 es igual 1 este asignara la ubicacion aleatoria de I
             if (cont2 == 1) {
+                //sacamos numero aleatorios que seran la ubicacion de I
                 ix = (int) (Math.random() * x-1);
                 iy = (int) (Math.random() * y-1);
+                //asignamos a la matriz creada el nuevo valos I
                 matriz[ix][iy] = 'I';
             }
             if (cont2 == 2) {
+                 //sacamos numero aleatorios que seran la ubicacion de F
                 fx = (int) (Math.random() * x);
                 fy = (int) (Math.random() * y);
+                  //asignamos a la matriz creada el nuevo valos F
                 matriz[fx][fy] = 'F';
             }
         } while (cont2 < 2);
+        //creo contornos los mismos que haran de limites para el laberinto
+        //para esto recorremos la matriz creada y asignamos los nuevos valores
+        //de asterisco que son nuestros obstaculos.
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                if(i==0){
+                    //contorno izquierdo
+                    //asignamos a la matriz el valor nuevo asterisco
+                    matriz[i][j] = '*';
+                }
+                if(j==0){
+                   //contorno superior
+                   //asignamos a la matriz el valor nuevo asterisco
+                    matriz[i][j] = '*';
+                }
+                if(j==matriz.length-1){
+                   //contorno derecha
+                   //asignamos a la matriz el valor nuevo asterisco
+                    matriz[i][j] = '*';
+                }
+                if(i==matriz.length-1){
+                   //contorno inferior
+                   //asignamos a la matriz el valor nuevo asterisco
+                    matriz[i][j] = '*';
+                }
+            }
+        }
+        //realizamos los for para mostrar en pantalla la matriz creada
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 System.out.print(matriz[i][j]);
-                System.out.print(" ");
+                System.out.print("  ");
             }
             System.out.println();
-        }
+        }  
+        System.out.println();
         BuscarCamino bc = new BuscarCamino();
-        xfijo=ix;
-        yfijo=iy;
-        bc.salida(matriz, ix, iy);
+        //enviamos al metodo caminar la matriz creada y los valores ix y iy que 
+        //son las cordenadas de I que seria nuestro inicio
+        bc.caminar(matriz, ix, iy);
     }
 }
